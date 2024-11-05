@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Hacker Interface</title>
+    <style>
+        /* General reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: black;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        /* Initial Screen Styles */
+        #initial-screen, #hacker-conversation {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        #initial-screen.active {
+            display: flex;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        /* Glowing animated text effect */
+        .glowing-text {
+            font-size: 3em; /* Increased size */
+            color: #8B0000; /* Dark red color */
+            text-shadow: 0 0 10px #8B0000, 0 0 20px #8B0000, 0 0 30px #8B0000; /* Dark red glow */
+            animation: glow 1.5s ease-in-out infinite alternate; /* Changed to alternate */
+        }
+
+        @keyframes glow {
+            0% { opacity: 0.8; }
+            100% { opacity: 1; }
+        }
+
+        /* Loading Bar */
+        #loading-bar {
+            width: 80%; /* Adjusted width */
+            height: 15px; /* Increased height */
+            background-color: grey;
+            margin-top: 20px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 5px; /* Rounded corners */
+        }
+
+        #loading-fill {
+            height: 100%;
+            width: 0;
+            background-color: #8B0000; /* Dark red */
+            transition: width 7s linear;
+            box-shadow: 0 0 10px #8B0000; /* Glowing effect */
+        }
+
+        #press-here {
+            margin-top: 20px;
+            font-size: 1.5em; /* Increased font size */
+            color: white;
+            opacity: 0.7;
+            cursor: pointer;
+            display: none;
+            transition: opacity 0.3s;
+        }
+
+        #press-here:hover {
+            opacity: 1;
+        }
+
+        /* Hacker Conversation Screen */
+        #hacker-conversation.active {
+            display: flex;
+            animation: fadeIn 1s ease-in-out;
+            padding: 20px; /* Added padding for better layout */
+            overflow-y: auto; /* Allow scrolling if needed */
+            max-height: 80vh; /* Limit height */
+        }
+
+        .message {
+            max-width: 80%;
+            margin: 10px;
+            font-size: 1.2em; /* Slightly larger text */
+        }
+
+        /* Message animation */
+        .typing-animation {
+            opacity: 0;
+            animation: typewriter 1s forwards;
+        }
+
+        @keyframes typewriter {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        /* Fade in */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Gothic Number Style */
+        .gothic-numbers {
+            font-family: 'Garamond', serif; /* You can use any gothic font */
+            color: #8B0000; /* Dark red */
+            text-shadow: 0 0 10px #8B0000, 0 0 20px #8B0000, 0 0 30px #8B0000;
+            font-size: 3em; /* Increased size */
+            animation: glow 1.5s ease-in-out infinite alternate;
+        }
+
+        /* Nickname Style */
+        .nickname {
+            font-size: 1.5em;
+            color: #fff;
+            margin-top: 10px;
+            text-shadow: 0 0 10px #8B0000; /* Glowing effect */
+        }
+    </style>
+</head>
+<body>
+    <!-- Initial Screen -->
+    <div id="initial-screen" class="active">
+        <div class="gothic-numbers">+(77)-777-777</div> <!-- Added dashes and additional sevens -->
+        <div class="nickname">fuckyousway</div> <!-- Added nickname -->
+        <div id="loading-bar">
+            <div id="loading-fill"></div>
+        </div>
+        <div id="press-here">Press Here</div>
+    </div>
+
+    <!-- Hacker Conversation Screen -->
+    <div id="hacker-conversation">
+        <div class="message typing-animation" style="animation-delay: 0s;">Hacker1: Yo, I just cracked the code on that audio file. This is wild!</div>
+        <div class="message typing-animation" style="animation-delay: 2s;">Hacker2: No way! That file’s like a treasure chest, dude. We gotta get in there!</div>
+        <div class="message typing-animation" style="animation-delay: 4s;">Hacker1: For real! I’m booting up the tools. Let’s see what secrets we can unearth.</div>
+        <div class="message typing-animation" style="animation-delay: 6s;">Hacker2: Just remember, we gotta be slick. No traces, alright?</div>
+        <div class="message typing-animation" style="animation-delay: 8s;">Hacker1: Got it! Going dark now. Engaging stealth mode...</div>
+        <div class="message typing-animation" style="animation-delay: 10s;">Hacker2: Stealth mode activated. Bypass attempt in progress!</div>
+        <div class="message typing-animation" style="animation-delay: 12s;">Hacker1: Hold up! Decryption hack is loading. Just a sec...</div>
+        <div class="message typing-animation" style="animation-delay: 14s;">Hacker2: I see it! The file’s right there! We’re almost in!</div>
+        <div class="message typing-animation" style="animation-delay: 16s;">Hacker1: Uploading it now! This is gonna blow everyone's minds!</div>
+        <a href="https://on.soundcloud.com/PMeTg71ycPGNWWZs6" target="_blank" class="message typing-animation" style="animation-delay: 18s; color: #8B0000; text-decoration: underline;">[Click here to grab the audio file]</a> <!-- Updated link -->
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initial Elements
+            const loadingFill = document.getElementById('loading-fill');
+            const pressHere = document.getElementById('press-here');
+            const initialScreen = document.getElementById('initial-screen');
+            const hackerConversation = document.getElementById('hacker-conversation');
+
+            // Start loading bar animation
+            setTimeout(() => {
+                loadingFill.style.width = '100%';
+            }, 100);
+
+            // Show "Press Here" after 7 seconds
+            setTimeout(() => {
+                pressHere.style.display = 'block';
+            }, 7000);
+
+            // Transition to hacker conversation screen
+            pressHere.addEventListener('click', () => {
+                initialScreen.classList.remove('active');
+                hackerConversation.classList.add('active');
+                loadMessages();
+            });
+
+            // Display messages in sequence with adjusted timing
+            function loadMessages() {
+                const messages = document.querySelectorAll('.message.typing-animation');
+                messages.forEach((msg, index) => {
+                    setTimeout(() => {
+                        msg.style.opacity = 1;
+                    }, index * 2000); // Slowed down to 2 seconds per message
+                });
+            }
+        });
+    </script>
+</body>
+</html>
